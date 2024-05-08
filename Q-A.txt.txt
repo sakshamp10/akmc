@@ -1,0 +1,88 @@
+1) Consider a function that needs to access the /proc filesystem of an Android device. A developer decides to write it in native code. On a freshly purchased smartphone, would it function? Justify.
+
+Yes, the function would generally function on a freshly purchased smartphone, assuming the app has the necessary permissions. The /proc filesystem on Android, which is a Linux-based OS, is accessible for reading system and process information. However, writing to /proc might require root access, which is not typically available on new devices without modification. Native code in Android, written using C or C++, can interact with the system's underlying APIs and filesystems like /proc as long as it adheres to the platform's security and permission guidelines.
+
+
+
+2) Assume that a visually challenged user wants to use their fingerprint to utilize additional gestures. Which feature of Android can be utilized to enable this? Does this need to be addressed in native code?
+
+Developing this kind of functionality does not necessarily need to be addressed in native code; it can also be implemented in Java or Kotlin using the Android SDK. The Android SDK provides comprehensive support for accessibility features, making it easier and more efficient to handle such requirements at the application level rather than using native code, which would involve more complexity and lower-level interaction with the device's hardware.
+
+
+3)Consider an IoT device that is released into the market with the same default password. Is this setting fine, or is it likely to lead to some problem? If it could lead to some problem, then what could be the problem?
+
+Releasing an IoT device into the market with the same default password for all units is not advisable and can lead to significant security problems. This setting could make the devices vulnerable to various types of cyber attacks, including:
+
+Unauthorized Access: If the default password is widely known or easily guessable, it becomes trivial for attackers to gain access to the device. They could manipulate its functionality, steal sensitive information, or use it as a point of entry into the network.
+Mass Attacks: Devices with the same default passwords are susceptible to automated attacks where bots scan the internet for vulnerable devices. Once found, these devices can be compromised en masse.
+Botnet Recruitment: Compromised IoT devices can be corralled into a botnet, which is a network of infected devices used to launch coordinated attacks such as Distributed Denial of Service (DDoS) attacks, spam campaigns, or further malware distribution.
+To mitigate these risks, manufacturers should encourage or enforce the change of default passwords during initial setup or, better yet, require each device to have a unique password set before it can be used. This helps to drastically reduce the vulnerability of the devices to the aforementioned security threats.
+
+4) Consider a function that is likely to lead to high energy and time consumption. How would an offloading framework deal with it, and what is the systems technique that it would use to do so?
+
+An offloading framework would handle a high-energy and time-consuming function by transferring the execution of that function from a resource-constrained device (like a mobile device or an IoT device) to a more capable system (like a server or cloud infrastructure). This technique, known as "computational offloading" or "cyber foraging," leverages faster processors and more abundant resources of the remote system to perform the task more efficiently, thereby saving energy and reducing execution time on the original device.
+
+5)Suppose two apps within Android decide to use FIFOs/named pipes to communicate with each other. Is this possible, and if so, write a short code to explain how to do it. If not possible, then explain which feature of Android stops it from doing it.
+
+Using FIFOs/named pipes for inter-app communication on Android is generally not feasible due to the operating system's security model, specifically the sandboxing feature. Each app in Android runs in its own process with a unique user ID, and the filesystem permissions typically prevent one app from accessing the files or named pipes created by another unless they share the same user ID or are explicitly granted permissions through shared Linux user IDs. This strict isolation helps prevent unauthorized data access and inter-app interference, ensuring apps cannot easily interact with each other's private files or communication channels.
+
+
+6)Is it possible to set up an Android device with a different bootloader, while retaining the warranty on it? Why or why not?
+
+Generally, setting up an Android device with a different bootloader will void the warranty. This is because changing the bootloader usually requires unlocking the device's bootloader, a process that manufacturers consider a security risk and a modification of the original software configuration. As a result, this action typically violates the warranty terms.
+
+7) GPS provides a best accuracy of 1 meter today. Is it still possible for LocationService to give better accuracy than 1 meter? If so, using which function and how?
+
+Yes, LocationService can achieve better accuracy than 1 meter by utilizing methods such as RTK (Real-Time Kinematic) positioning, which enhances GPS data. RTK uses fixed reference stations to correct GPS signals and provide centimeter-level accuracy. This technology is particularly useful in applications requiring high precision, such as surveying and autonomous vehicle navigation.
+
+8) Suppose you run SensorManager when the app is in the background. Does this create any extra problems, and if so, what is it?
+
+
+Running SensorManager when an app is in the background can create problems primarily related to battery drain and resource consumption. Background operations, especially those involving sensors, can be resource-intensive and significantly reduce battery life if not managed properly. Furthermore, with Android's recent focus on improving battery life and performance, operating systems might restrict or throttle background processing, leading to potential data loss or decreased sensor data accuracy.
+
+9) Assume that you want to use native code from Java (not necessarily using Android). How is it possible for the Java code to know the existence of the C functions? Is there any specific code snippet used for this purpose?
+
+To use native code from Java (outside of the Android context), Java provides a facility called Java Native Interface (JNI). JNI allows Java code to interact with applications and libraries written in other languages like C or C++. The specific way to declare this in Java is by using the native keyword in method declarations. Here is a brief code snippet:
+
+public class Example {
+    // Declare the native method
+    public native void nativeMethodName();
+
+    static {
+        // Load the native library
+        System.loadLibrary("LibraryName");
+    }
+}
+
+10) Suppose you are using a companion app to communicate with your smartphone. What is the most likely network technology that is being used? What are the problems an alternative technology could have created?
+
+The most likely network technology used for a companion app to communicate with a smartphone is Bluetooth, particularly for applications like smartwatches or fitness trackers due to its low power consumption and decent range. An alternative technology like Wi-Fi could create problems such as higher power consumption and potentially more complex setup processes due to the need for Wi-Fi networks and passwords, making it less ideal for simple, on-the-go interactions between devices.
+
+11) Suppose a user runs an app, which attempts to read a file that it is not allowed to. The user then changes the ownership of the file to itself, and tries to provide the required permissions. Is this likely to work? Why or why not?
+
+
+This approach is unlikely to work on most operating systems, including Android, because a user (or an app) typically does not have the permission to change the ownership of files that it does not already own. Such actions require administrative privileges. Additionally, the operating system’s security model generally restricts apps from elevating their permissions arbitrarily to prevent security breaches.
+
+12) Assume that a user wants to use machine learning to predict the words that they use, but does not want to send each typed key to the cloud. Assuming that a smartphone does not have the compute capability to train the model, is there any technique to enable this facility? If it is possible, then you must name the technique.
+
+
+Yes, a technique called "federated learning" can enable this facility. In federated learning, the training of machine learning models is distributed across many devices (e.g., smartphones). Each device trains a model locally on its data and periodically sends only the model updates to a central server, which then aggregates these updates to improve the overall model without needing to access the raw data from each device. This approach preserves privacy and reduces the need to send sensitive data to the cloud.
+
+
+13) Consider a case in crowdsensing where a particular device decides to send malicious information. Is this usually considered a possibility in crowdsensing, and how are such problems analytically modeled?
+
+
+Yes, the possibility of devices sending malicious information is a known risk in crowdsensing environments. These problems are analytically modeled using trust and reputation systems, where data from various sources is weighted based on the credibility and reliability of each contributing device. Techniques like anomaly detection and consensus algorithms are also employed to identify and mitigate the impact of false or malicious data inputs.
+
+
+
+14)Consider an app that has to run multiple neural networks, some with high accuracy and others where high accuracy is less required, but quick results are essential. The smartphone has an offloading framework, as well as NPUs and the usual CPU. Where should the neural networks be executed to satisfy the requirements?
+
+For neural networks requiring high accuracy, execution should ideally occur on the Neural Processing Units (NPUs) of the smartphone, as NPUs are optimized for high-performance machine learning tasks and can handle complex computations efficiently. For networks where speed is more critical than accuracy, using the offloading framework to execute these models on a remote server with powerful hardware can provide quicker results. This approach leverages the strengths of each processing unit to meet the specific requirements of each neural network task effectively.
+
+
+
+15) Assume that you have two smartphones in your pocket. You are measuring the number of steps taken using each of them. Each of them can give slightly different results. How would you identify the number of steps using the least amount of estimation error?
+
+
+To identify the number of steps with the least amount of estimation error when using two smartphones, you could employ a data fusion technique. This method involves averaging the step counts reported by each device or using a more sophisticated algorithm like a weighted average where weights are assigned based on the historical accuracy of each smartphone's pedometer. Alternatively, using a Kalman filter can dynamically adjust the estimates based on the measurements' variances, providing a more accurate and real-time estimation of steps taken.
