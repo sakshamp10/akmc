@@ -1,0 +1,21 @@
+
+
+1. To access data in a trusted environment, an app typically needs to authenticate itself and obtain authorization. Once authenticated, the app securely communicates with the trusted environment using protocols such as HTTPS, ensuring data confidentiality and integrity.
+
+2. To transfer a binary tree data structure to a server in Android, you can serialize the tree into a suitable format like JSON or XML. Libraries such as Gson or Jackson can assist with serialization. Then, you can use HTTP requests, possibly with libraries like OkHttp or Retrofit, to send the serialized data to the server.
+
+3. In a video streaming service that uses HTTP, the transport protocol utilized is TCP (Transmission Control Protocol). The HTTP GET operation is used to request a new chunk of data from the server, ensuring the continuous delivery of video segments to the client for playback.
+
+4. The best way to handle events such as user taps in Android is by implementing event listeners or using the Observer pattern. Event listeners can be attached to UI components for simple interactions, while the Observer pattern facilitates more complex event handling scenarios with multiple components reacting to events.
+
+5. Disagreeing with the statement, Android apps are not significantly slower solely due to just-in-time compilation (JIT). Modern Android devices are equipped with powerful hardware and optimized runtime environments, mitigating any performance impact from JIT compilation. Various factors contribute to app performance, including efficient coding practices and device-specific optimizations.
+
+6. Showing a lot of text on a TextBox in an app may not necessarily be problematic in terms of computation. However, to optimize performance, you can implement strategies such as lazy loading or pagination to load and display text content incrementally, reducing the computational burden on the app.
+
+7. For a background task, it's preferable to utilize the smaller, more power-efficient cores (LITTLE cores) to conserve battery life and minimize thermal output. Tasks that do not require intensive processing can be efficiently handled by these cores, optimizing overall system performance.
+
+8. If a hardware vendor introduces a feature that affects the functionality of Android apps, adjustments need to be made to ensure compatibility or provide alternative solutions. Selling the hardware may still be possible by addressing compatibility issues through software updates or providing clear communication about the limitations to potential buyers.
+
+9. For an application that writes streams of information to a database, it's generally more efficient to batch the writes instead of writing to the database as soon as the information comes in. This reduces the frequency of database interactions, improving overall performance and scalability of the application.
+
+10. Developing an app with end-to-end encryption without using TLS is technically possible, but it may not be allowed on the Google Play Store due to security concerns. Google Play Store has strict policies regarding data encryption and network security, and apps are typically required to use TLS for secure communication to protect user data and privacy.
