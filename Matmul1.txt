@@ -1,0 +1,76 @@
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MaterialTheme {
+                MainScreen()
+            }
+        }
+    }
+}
+
+@Composable
+fun MainScreen() {
+    val matrixA = arrayOf(
+        arrayOf(1, 2, 3),
+        arrayOf(4, 5, 6),
+        arrayOf(7, 8, 9)
+    )
+    val matrixB = arrayOf(
+        arrayOf(9, 8, 7),
+        arrayOf(6, 5, 4),
+        arrayOf(3, 2, 1)
+    )
+    val productMatrix = multiplyMatrices(matrixA, matrixB)
+
+    Column(
+        modifier = Modifier.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("Matrix A", fontSize = 20.sp)
+        MatrixDisplay(matrixA)
+        Text("Matrix B", fontSize = 20.sp)
+        MatrixDisplay(matrixB)
+        Text("Product of A and B", fontSize = 20.sp)
+        MatrixDisplay(productMatrix)
+    }
+}
+
+@Composable
+fun MatrixDisplay(matrix: Array<Array<Int>>) {
+    matrix.forEach { row ->
+        Text(
+            text = row.joinToString(" ", transform = { it.toString() }),
+            modifier = Modifier.fillMaxWidth(),
+            fontSize = 18.sp
+        )
+    }
+}
+
+fun multiplyMatrices(matrixA: Array<Array<Int>>, matrixB: Array<Array<Int>>): Array<Array<Int>> {
+    val result = Array(3) { Array(3) { 0 } }
+    for (i in 0..2) {
+        for (j in 0..2) {
+            for (k in 0..2) {
+                result[i][j] += matrixA[i][k] * matrixB[k][j]
+            }
+        }
+    }
+    return result
+}
