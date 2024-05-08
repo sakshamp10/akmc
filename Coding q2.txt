@@ -1,0 +1,213 @@
+For your Android application that shows routes from IIITD to the Lotus Temple using Jetpack Compose and Google Maps API, I will guide you through creating a single Kotlin file. This includes setting up the UI using Jetpack Compose and integrating Google Maps to dynamically retrieve and display routes.
+
+Preliminary Steps
+Google Maps API Key: You'll need a Google Maps API Key to use the Maps SDK and Directions API. You can get this key from the Google Cloud Platform Console.
+Add dependencies in your build.gradle:
+
+implementation 'com.google.android.gms:play-services-maps:18.0.2'
+implementation 'com.google.maps:google-maps-services:0.19.0'
+implementation 'androidx.compose.ui:ui:1.0.1'
+
+
+
+Permissions in AndroidManifest.xml:
+
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+
+Add your Maps API Key in the manifest:
+
+<meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="YOUR_API_KEY"/>
+
+
+Kotlin Implementation (MainActivity.kt)
+Below is a simplified example using Jetpack Compose to create the UI and display the map with the route. This implementation assumes you have basic knowledge of setting up a Jetpack Compose project and managing Google API keys.
+
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.maps.DirectionsApi
+import com.google.maps.GeoApiContext
+import com.google.maps.model.TravelMode
+
+class MainActivity : ComponentActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MapViewContainer()
+        }
+    }
+
+    @Composable
+    fun MapViewContainer() {
+        val mapView = rememberMapViewWithLifecycle()
+        val context = GeoApiContext.Builder()
+            .apiKey("YOUR_API_KEY")
+            .build()
+        var googleMap: GoogleMap? = null
+
+        AndroidView(
+            factory = { mapView },
+            modifier = Modifier.fillMaxSize()
+        ) {
+            mapView.getMapAsync { map ->
+                googleMap = map
+                val iiitd = LatLng(28.5450, 77.2732) // Approximate coordinates for IIITD
+                val lotusTemple = LatLng(28.5535, 77.2588) // Coordinates for Lotus Temple
+
+                map.addMarker(MarkerOptions().position(iiitd).title("IIITD"))
+                map.addMarker(MarkerOptions().position(lotusTemple).title("Lotus Temple"))
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(iiitd, 15f))
+
+                // Fetch and draw route
+                drawRoute(context, iiitd, lotusTemple, map)
+            }
+        }
+    }
+
+    fun drawRoute(context: GeoApiContext, start: LatLng, end: LatLng, map: GoogleMap) {
+        val request = DirectionsApi.newRequest(context)
+            .mode(TravelMode.DRIVING)
+            .origin(com.google.maps.model.LatLng(start.latitude, start.longitude))
+            .destination(com.google.maps.model.LatLng(end.latitude, end.longitude))
+            .await()
+
+        val path = request.routes[0].overviewPolyline.decodePath().map {
+            LatLng(it.lat, it.lng)
+        }
+
+        map.addPolyline(
+            PolylineOptions().addAll(path).color(Color.BLUE)
+        )
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+For your Android application that shows routes from IIITD to the Lotus Temple using Jetpack Compose and Google Maps API, I will guide you through creating a single Kotlin file. This includes setting up the UI using Jetpack Compose and integrating Google Maps to dynamically retrieve and display routes.
+
+Preliminary Steps
+Google Maps API Key: You'll need a Google Maps API Key to use the Maps SDK and Directions API. You can get this key from the Google Cloud Platform Console.
+Add dependencies in your build.gradle:
+groovy
+Copy code
+implementation 'com.google.android.gms:play-services-maps:18.0.2'
+implementation 'com.google.maps:google-maps-services:0.19.0'
+implementation 'androidx.compose.ui:ui:1.0.1'
+Permissions in AndroidManifest.xml:
+xml
+Copy code
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+Add your Maps API Key in the manifest:
+xml
+Copy code
+<meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="YOUR_API_KEY"/>
+Kotlin Implementation (MainActivity.kt)
+Below is a simplified example using Jetpack Compose to create the UI and display the map with the route. This implementation assumes you have basic knowledge of setting up a Jetpack Compose project and managing Google API keys.
+
+kotlin
+Copy code
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.maps.DirectionsApi
+import com.google.maps.GeoApiContext
+import com.google.maps.model.TravelMode
+
+class MainActivity : ComponentActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            MapViewContainer()
+        }
+    }
+
+    @Composable
+    fun MapViewContainer() {
+        val mapView = rememberMapViewWithLifecycle()
+        val context = GeoApiContext.Builder()
+            .apiKey("YOUR_API_KEY")
+            .build()
+        var googleMap: GoogleMap? = null
+
+        AndroidView(
+            factory = { mapView },
+            modifier = Modifier.fillMaxSize()
+        ) {
+            mapView.getMapAsync { map ->
+                googleMap = map
+                val iiitd = LatLng(28.5450, 77.2732) // Approximate coordinates for IIITD
+                val lotusTemple = LatLng(28.5535, 77.2588) // Coordinates for Lotus Temple
+
+                map.addMarker(MarkerOptions().position(iiitd).title("IIITD"))
+                map.addMarker(MarkerOptions().position(lotusTemple).title("Lotus Temple"))
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(iiitd, 15f))
+
+                // Fetch and draw route
+                drawRoute(context, iiitd, lotusTemple, map)
+            }
+        }
+    }
+
+    fun drawRoute(context: GeoApiContext, start: LatLng, end: LatLng, map: GoogleMap) {
+        val request = DirectionsApi.newRequest(context)
+            .mode(TravelMode.DRIVING)
+            .origin(com.google.maps.model.LatLng(start.latitude, start.longitude))
+            .destination(com.google.maps.model.LatLng(end.latitude, end.longitude))
+            .await()
+
+        val path = request.routes[0].overviewPolyline.decodePath().map {
+            LatLng(it.lat, it.lng)
+        }
+
+        map.addPolyline(
+            PolylineOptions().addAll(path).color(Color.BLUE)
+        )
+    }
+}
+
+
+
+Explanation
+Map Initialization: We set up a MapView inside a Compose layout using AndroidView. We initialize the map and set markers at IIITD and Lotus Temple.
+Route Drawing: We use Google's Directions API to fetch routes between IIITD and the Lotus Temple, decoding the polyline and drawing it on the map.
+Permissions: This example assumes you handle necessary runtime permissions for internet access and location services.
+This example should be adapted according to your actual application architecture, and further testing and error handling should be considered, especially for handling API responses and lifecycle management.
